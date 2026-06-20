@@ -11,11 +11,11 @@ map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <leader>j :bnext<cr>
 nnoremap <leader>k :bprev<cr>
 
-nnoremap <leader>ve :vsplit $MYVIMRC<cr>
+nnoremap <leader>ve :e $MYVIMRC<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>
-nnoremap <leader>vt :vsplit ~/vimtips<cr>
+nnoremap <leader>vt :e ~/vimtips<cr>
 
-nnoremap <leader>be :vsplit ~/.bashrc<cr>
+nnoremap <leader>be :e ~/.bashrc<cr>
 nnoremap <leader>bs :!source ~/.bashrc<cr>
 
 nnoremap Y y$
@@ -78,16 +78,24 @@ au FileType sql vnoremap <leader>r :w !psql $DATABASE_URL > sql.out <cr>
 au FileType sql nnoremap <leader>c mq0i-- <esc>`q
 au FileType sql vnoremap <leader>c :normal 0i-- <cr>
 
-au FileType sql :iabbrev <buffer> sel SELECT
+au FileType sql :iabbrev <buffer> in IN
+au FileType sql :iabbrev <buffer> or OR
+au FileType sql :iabbrev <buffer> and AND
+au FileType sql :iabbrev <buffer> add ADD
+au FileType sql :iabbrev <buffer>not NOT
+au FileType sql :iabbrev <buffer> set SET
+
+au FileType sql :iabbrev <buffer> column COLUMN
+au FileType sql :iabbrev <buffer> col COLUMN
+
 au FileType sql :iabbrev <buffer> select SELECT
+au FileType sql :iabbrev <buffer> sel SELECT
 
 au FileType sql :iabbrev <buffer> from FROM
 au FileType sql :iabbrev <buffer> fro FROM
 
 au FileType sql :iabbrev <buffer> where WHERE
 au FileType sql :iabbrev <buffer> whe WHERE
-
-au FileType sql :iabbrev <buffer> and AND
 
 au FileType sql :iabbrev <buffer> exists EXISTS
 au FileType sql :iabbrev <buffer> exi EXISTS
@@ -101,8 +109,6 @@ au FileType sql :iabbrev <buffer> alt ALTER
 au FileType sql :iabbrev <buffer> table TABLE
 au FileType sql :iabbrev <buffer> tab TABLE
 
-au FileType sql :iabbrev <buffer> add ADD
-
 au FileType sql :iabbrev <buffer> create CREATE
 au FileType sql :iabbrev <buffer> cre CREATE
 
@@ -114,6 +120,39 @@ au FileType sql :iabbrev <buffer> int INTO
 
 au FileType sql :iabbrev <buffer> enable ENABLE
 au FileType sql :iabbrev <buffer> ena ENABLE
+
+au FileType sql :iabbrev <buffer> drop DROP
+au FileType sql :iabbrev <buffer> dro DROP
+
+au FileType sql :iabbrev <buffer> cascade CASCADE
+au FileType sql :iabbrev <buffer> cas CASCADE
+
+au FileType sql :iabbrev <buffer> unique UNIQUE
+au FileType sql :iabbrev <buffer> uni UNIQUE
+
+au FileType sql :iabbrev <buffer> null NULL
+au FileType sql :iabbrev <buffer> nul NULL
+
+au FileType sql :iabbrev <buffer> references REFERENCES
+au FileType sql :iabbrev <buffer> ref REFERENCES
+
+au FileType sql :iabbrev <buffer> default DEFAULT
+au FileType sql :iabbrev <buffer> def DEFAULT
+
+au FileType sql :iabbrev <buffer> true TRUE
+au FileType sql :iabbrev <buffer> tru TRUE
+
+au FileType sql :iabbrev <buffer> false FALSE
+au FileType sql :iabbrev <buffer> fal FALSE
+
+au FileType sql :iabbrev <buffer> bool BOOL
+au FileType sql :iabbrev <buffer> boo BOOL
+
+au FileType sql :iabbrev <buffer> between BETWEEN
+au FileType sql :iabbrev <buffer> bet BETWEEN
+
+au FileType sql :iabbrev <buffer> function FUNCTION
+au FileType sql :iabbrev <buffer> fun FUNCTION
 
 au FileType sql :iabbrev <buffer> rls ROW LEVEL SECURITY
 augroup END
@@ -139,6 +178,7 @@ au FileType dart :iabbrev <buffer> br ()<left>
 au FileType dart :iabbrev <buffer> bc {}<left>
 au FileType dart :iabbrev <buffer> bs []<left>
 au FileType dart :iabbrev <buffer> ba <><left>
+au FileType dart :iabbrev <buffer> brc ({})<left><left>
 au FileType dart :iabbrev <buffer> brbc (){}<left>
 au FileType dart :iabbrev <buffer> brabc ()async{}<left>
 au FileType dart :iabbrev <buffer> fa =>
@@ -146,19 +186,26 @@ au FileType dart :iabbrev <buffer> fa =>
 au FileType dart :iabbrev <buffer> rn return
 au FileType dart :iabbrev <buffer> ea EdgeInsets.all(),<left><left>
 au FileType dart :iabbrev <buffer> spa spacing:,<left>
-au FileType dart :iabbrev <buffer> imfb import 'package:flutter_bloc/flutter_bloc.dart';
-au FileType dart :iabbrev <buffer> immb import 'package:lr_client/core/widgets/modal_builder/modal_builder.dart';
-au FileType dart :iabbrev <buffer> imsl import 'package:lr_client/injection.dart';
-au FileType dart :iabbrev <buffer> inis @override initState() { super.initState(); }<esc><esc>
-au FileType dart :iabbrev <buffer> maa  mainAxisAlignment: MainAxisAlignment.,<left>
+au FileType dart :iabbrev <buffer> ifb import 'package:flutter_bloc/flutter_bloc.dart';
+au FileType dart :iabbrev <buffer> imb import 'package:lr_client/core/widgets/modal_builder/modal_builder.dart';
+au FileType dart :iabbrev <buffer> ida import 'package:dartz/dartz.dart' hide id;
+au FileType dart :iabbrev <buffer> iad import 'package:lr_client/app_data.dart';
+au FileType dart :iabbrev <buffer> iac import 'dart:async';
+au FileType dart :iabbrev <buffer> ieq import 'package:equatable/equatable.dart';
+au FileType dart :iabbrev <buffer> isl import 'package:lr_client/injection.dart';
+au FileType dart :iabbrev <buffer> goc getOrCrash
+au FileType dart :iabbrev <buffer> ini @override initState() { super.initState(); }<esc><esc>
+au FileType dart :iabbrev <buffer> maa mainAxisAlignment: MainAxisAlignment.,<left>
+au FileType dart :iabbrev <buffer> caa crossAxisAlignment: CrossAxisAlignment.,<left>
 
 au FileType dart :iabbrev <buffer> lm class Modal extends LongModal { @override Bloc<dynamic, dynamic>? get bloc => null; @override Widget content(BuildContext context) { return Container( color: context.colorScheme.surface, padding: EdgeInsets.all(24), child: ZoneLocations(),); } @override Stream<bool> get isBusyStream => Stream.value(false); @override void popWithValue(BuildContext context) { context.pop(); } @override Widget title(BuildContext context) { return Text('Locations'); } @override LongModalConfiguration configure(BuildContext context) { return LongModalConfiguration(useDefaultContentPadding: false); } }
+au FileType dart :iabbrev <buffer> wbb return BlocBuilder<Bloc, State>( builder: (context, state) {return ;},);<left><left><left><left><left>
 
 au FileType dart nnoremap <leader>p yiwoprint('<esc>pa: ${<esc>pa}');<esc>
 au FileType dart vnoremap <leader>p yoprint('<esc>pa: ${<esc>pa}');<esc>
 
 au FileType dart nnoremap <leader>flww ebi(child:<esc>f(%a)<esc>%i
-au FileType dart nnoremap <leader>flwc ebiColumn(crossAxisAlignment:CrossAxosAlignment.stretch,children:[<esc>f(%a])<esc>
+au FileType dart nnoremap <leader>flwc ebiColumn(crossAxisAlignment:CrossAxisAlignment.stretch,children:[<esc>f(%a])<esc>
 au FileType dart nnoremap <leader>flwr ebiRow(crossAxisAlignment:CrossAxosAlignment.start,children:[<esc>f(%a])<esc>
 au FileType dart nnoremap <leader>flwbp ebv/(<cr>%diBlocProvider<Bloc>.value(value: , child: )<esc>P%/:<cr>a
 au FileType dart nnoremap <leader>flwbb ebv/(<cr>%diBlocBuilder<Bloc, State>(builder:(context, state){return ;})<esc>hhhp
@@ -174,8 +221,8 @@ nmap _ :Lexplore<CR>
 " let g:netrw_liststyle = 3
 let g:netrw_winsize = 20
 " let g:netrw_keepdir = 1
-" nnoremap <leader>dd :Lexplore %:p:h<CR>
-" nnoremap <Leader>da :Lexplore<CR>
+nnoremap <leader>dd :Lexplore %:p:h<CR>
+nnoremap <Leader>da :Lexplore<CR>
 
 " file handling
 set autoread
@@ -189,8 +236,6 @@ set ignorecase
 set smartcase
 
 " miscelaneous
-set splitright
-set splitbelow
 set autoindent
 set noruler
 set nowrap

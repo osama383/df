@@ -9,6 +9,7 @@ my_branch='settings-v2'
 
 alias go='cd ~/dev/projects/gantry_ops/'
 alias fb='cd ~/small_talk/go_fb/'
+alias da='dart analyze ~/dev/projects/gantry_ops/apps/lr_client'
 
 alias ls='ls -alh --color=always --group-directories-first'
 alias grep='grep --color=auto'
@@ -33,7 +34,6 @@ alias iskoBrightKaren='brightnessctl set '
 alias podStatus='systemctl --user status podman.socket'
 alias podRestart='systemctl --user restart podman.socket'
 alias podVerifySocket='ls -la /run/user/1000/podman/podman.sock'
-alias edh=''
 
 alias aaBattery='cat /sys/class/power_supply/BAT0/capacity'
 alias aaMirrorMonitor='xrandr --output HDMI-1 --auto --same-as eDP-1 --mode 1920x1080'
@@ -45,7 +45,8 @@ alias fpg='flutter pub get'
 alias fcg='dart run build_runner build --delete-conflicting-outputs'
 
 alias ss='flameshot gui -d 2000'
-alias sr='ffmpeg -f x11grab -s 1920x1080 -i :0.0+1920,0 ~/recording.mp4'
+alias srmonitor='ffmpeg -f x11grab -s 1920x1080 -i :0.0+1920,0 ~/recording.mp4'
+alias srlaptop='ffmpeg -f x11grab -r 30 -s 1920x1200 -i :0.0 -c:v libx264 -preset ultrafast -crf 23 output.mp4'
 
 alias sb='supabase'
 alias sbs='sb start --ignore-health-check'
