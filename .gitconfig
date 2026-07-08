@@ -1,0 +1,16 @@
+[user]
+	email = sosamaalirizvi@gmail.com
+	name = Osama
+[merge]
+	tool = vimdiff
+[mergetool]
+	keepBackup = false
+	keppBackup = false
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+	f = fetch
+[push]
+	autoSetupRemote = true

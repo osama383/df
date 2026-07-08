@@ -1,5 +1,12 @@
+if &diff
+  colorscheme retrobox
+endif
+
+
 " these mappings should not use the default register for yank and delete
 
+set laststatus=2
+set statusline=%n\ %t\ %m
 set notimeout
 filetype on
 let mapleader = ";"
@@ -8,8 +15,8 @@ iabbrev <l <lea<left><right>der>
 
 map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-nnoremap <leader>j :bnext<cr>
-nnoremap <leader>k :bprev<cr>
+" nnoremap <leader>j :bnext<cr>
+" nnoremap <leader>k :bprev<cr>
 
 nnoremap <leader>ve :e $MYVIMRC<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>
@@ -23,7 +30,7 @@ nnoremap u <nop>
 nnoremap U u
 
 nnoremap `` :helpc<cr>:ccl<cr> 
-nnoremap <leader>ff *:vim //j **/*.dart<cr>:copen<cr>
+nnoremap <leader>ff :vim //j **/*.dart<cr>:copen<cr>
 
 nnoremap <leader>w :wa<cr>
 nnoremap <leader>e :e<cr>
@@ -78,12 +85,17 @@ au FileType sql vnoremap <leader>r :w !psql $DATABASE_URL > sql.out <cr>
 au FileType sql nnoremap <leader>c mq0i-- <esc>`q
 au FileType sql vnoremap <leader>c :normal 0i-- <cr>
 
+au FileType sql :iabbrev <buffer> is IS
 au FileType sql :iabbrev <buffer> in IN
 au FileType sql :iabbrev <buffer> or OR
 au FileType sql :iabbrev <buffer> and AND
 au FileType sql :iabbrev <buffer> add ADD
-au FileType sql :iabbrev <buffer>not NOT
+au FileType sql :iabbrev <buffer> not NOT
 au FileType sql :iabbrev <buffer> set SET
+au FileType sql :iabbrev <buffer> key KEY
+
+au FileType sql :iabbrev <buffer> primary PRIMARY
+au FileType sql :iabbrev <buffer> pri PRIMARY
 
 au FileType sql :iabbrev <buffer> column COLUMN
 au FileType sql :iabbrev <buffer> col COLUMN
@@ -154,6 +166,18 @@ au FileType sql :iabbrev <buffer> bet BETWEEN
 au FileType sql :iabbrev <buffer> function FUNCTION
 au FileType sql :iabbrev <buffer> fun FUNCTION
 
+au FileType sql :iabbrev <buffer> replace REPLACE
+au FileType sql :iabbrev <buffer> rep REPLACE
+
+au FileType sql :iabbrev <buffer> index INDEX
+au FileType sql :iabbrev <buffer> ind INDEX
+
+au FileType sql :iabbrev <buffer> check CHECK
+au FileType sql :iabbrev <buffer> che CHECK
+
+au FileType sql :iabbrev <buffer> constraint CONSTRAINT
+au FileType sql :iabbrev <buffer> con CONSTRAINT
+
 au FileType sql :iabbrev <buffer> rls ROW LEVEL SECURITY
 augroup END
 
@@ -167,7 +191,7 @@ au FileType dart nnoremap <leader>dt :!ctags -R .<cr>
 
 au FileType dart nnoremap <leader>iy :let @"=expand('%')<cr>
 au FileType dart nnoremap <leader>ip ggOimport '<esc>pa';<esc>0f'apackage:<esc>ld/lib<cr>ciwlr_client<esc>vip:sort<cr>Vip:uniq<cr>:DartFmt<cr>
-au FileType dart nnoremap <leader>io  0f/lyt':find ./apps/lr_client/lib/<c-R>"<cr>
+au FileType dart nnoremap <leader>gf  0f/lyt':find ./apps/lr_client/lib/<c-R>"<cr>
 
 au FileType dart nnoremap <leader>c mqI// <esc>`q 
 au FileType dart vnoremap <leader>c :normal 0i// <cr>
@@ -183,9 +207,7 @@ au FileType dart :iabbrev <buffer> brbc (){}<left>
 au FileType dart :iabbrev <buffer> brabc ()async{}<left>
 au FileType dart :iabbrev <buffer> fa =>
 
-au FileType dart :iabbrev <buffer> rn return
-au FileType dart :iabbrev <buffer> ea EdgeInsets.all(),<left><left>
-au FileType dart :iabbrev <buffer> spa spacing:,<left>
+
 au FileType dart :iabbrev <buffer> ifb import 'package:flutter_bloc/flutter_bloc.dart';
 au FileType dart :iabbrev <buffer> imb import 'package:lr_client/core/widgets/modal_builder/modal_builder.dart';
 au FileType dart :iabbrev <buffer> ida import 'package:dartz/dartz.dart' hide id;
@@ -193,10 +215,24 @@ au FileType dart :iabbrev <buffer> iad import 'package:lr_client/app_data.dart';
 au FileType dart :iabbrev <buffer> iac import 'dart:async';
 au FileType dart :iabbrev <buffer> ieq import 'package:equatable/equatable.dart';
 au FileType dart :iabbrev <buffer> isl import 'package:lr_client/injection.dart';
+au FileType dart :iabbrev <buffer> igm import 'package:google_maps_flutter/google_maps_flutter.dart';
+au FileType dart :iabbrev <buffer> ima import 'package:flutter/material.dart';
+au FileType dart :iabbrev <buffer> ivo import 'package:lr_client/core/models/common/value_object/value_object.dart';
+au FileType dart :iabbrev <buffer> itb import 'package:lr_client/core/table_builder/view/table_builder/table_builder.dart';
+
+au FileType dart :iabbrev <buffer> ret return
+au FileType dart :iabbrev <buffer> req required
+au FileType dart :iabbrev <buffer> thi this.
+au FileType dart :iabbrev <buffer> ea EdgeInsets.all(),<left><left>
+au FileType dart :iabbrev <buffer> spa spacing:,<left>
 au FileType dart :iabbrev <buffer> goc getOrCrash
 au FileType dart :iabbrev <buffer> ini @override initState() { super.initState(); }<esc><esc>
 au FileType dart :iabbrev <buffer> maa mainAxisAlignment: MainAxisAlignment.,<left>
 au FileType dart :iabbrev <buffer> caa crossAxisAlignment: CrossAxisAlignment.,<left>
+au FileType dart :iabbrev <buffer> sbs SizedBox.shrink(),
+au FileType dart :iabbrev <buffer> sbs SizedBox.shrink(),
+au FileType dart :iabbrev <buffer> wid widget.
+au FileType dart :iabbrev <buffer> mbl MultiBlocListener( listeners: [ BlocListener<Bloc, State>( listenWhen: (prev, curr) {}, listener: (context, state) {},), ], child: ChildA(),)
 
 au FileType dart :iabbrev <buffer> lm class Modal extends LongModal { @override Bloc<dynamic, dynamic>? get bloc => null; @override Widget content(BuildContext context) { return Container( color: context.colorScheme.surface, padding: EdgeInsets.all(24), child: ZoneLocations(),); } @override Stream<bool> get isBusyStream => Stream.value(false); @override void popWithValue(BuildContext context) { context.pop(); } @override Widget title(BuildContext context) { return Text('Locations'); } @override LongModalConfiguration configure(BuildContext context) { return LongModalConfiguration(useDefaultContentPadding: false); } }
 au FileType dart :iabbrev <buffer> wbb return BlocBuilder<Bloc, State>( builder: (context, state) {return ;},);<left><left><left><left><left>
@@ -204,17 +240,18 @@ au FileType dart :iabbrev <buffer> wbb return BlocBuilder<Bloc, State>( builder:
 au FileType dart nnoremap <leader>p yiwoprint('<esc>pa: ${<esc>pa}');<esc>
 au FileType dart vnoremap <leader>p yoprint('<esc>pa: ${<esc>pa}');<esc>
 
-au FileType dart nnoremap <leader>flww ebi(child:<esc>f(%a)<esc>%i
-au FileType dart nnoremap <leader>flwc ebiColumn(crossAxisAlignment:CrossAxisAlignment.stretch,children:[<esc>f(%a])<esc>
-au FileType dart nnoremap <leader>flwr ebiRow(crossAxisAlignment:CrossAxosAlignment.start,children:[<esc>f(%a])<esc>
-au FileType dart nnoremap <leader>flwbp ebv/(<cr>%diBlocProvider<Bloc>.value(value: , child: )<esc>P%/:<cr>a
-au FileType dart nnoremap <leader>flwbb ebv/(<cr>%diBlocBuilder<Bloc, State>(builder:(context, state){return ;})<esc>hhhp
+au FileType dart nnoremap <leader>fww ebi(child:<esc>f(%a)<esc>%i
+au FileType dart nnoremap <leader>fwc ebiColumn(crossAxisAlignment:CrossAxisAlignment.stretch,children:[<esc>f(%a])<esc>
+au FileType dart nnoremap <leader>fwr ebiRow(crossAxisAlignment:CrossAxisAlignment.start,children:[<esc>f(%a])<esc>
+au FileType dart nnoremap <leader>fwbp ebv/(<cr>%diBlocProvider<Bloc>.value(value: , child: )<esc>P%/:<cr>a
+au FileType dart nnoremap <leader>fwbb ebv/(<cr>%diBlocBuilder<Bloc, State>(builder:(context, state){return ;})<esc>hhhp
 
 au FileType dart nnoremap <leader>flrw mt/child:<cr>/(<cr>bvw%d`tebvw%p
 augroup END
 
+
 " netrw
-nmap _ :Lexplore<CR>
+nnoremap - :Lexplore %:p:h<CR>
 " let g:loaded_netrw       = 1
 " let g:loaded_netrwPlugin = 1
 " let g:netrw_banner = 0
@@ -236,6 +273,7 @@ set ignorecase
 set smartcase
 
 " miscelaneous
+set hidden
 set autoindent
 set noruler
 set nowrap
@@ -330,3 +368,58 @@ endfunction
 " 		let g:is_quickfix_open = 0
 " 	endif
 " endfunction
+
+
+" Open the next file in the same directory (alphabetically)
+nnoremap <leader>j :call OpenNextFile(1)<CR>
+nnoremap <leader>k :call OpenNextFile(-1)<CR>
+
+function! OpenNextFile(direction)
+  " Get the directory of the current file
+  let l:current = expand('%:p')
+  if l:current == ''
+    echo 'No active buffer with a file'
+    return
+  endif
+
+  let l:dir = expand('%:p:h')
+
+  " Get all files in the directory (not subdirectories), sorted
+  let l:files = sort(filter(glob(l:dir . '/*', 0, 1), 'filereadable(v:val)'))
+
+  if empty(l:files)
+    echo 'No files in directory'
+    return
+  endif
+
+  " Find current file index
+  let l:idx = index(l:files, l:current)
+
+  " Move in the requested direction
+  let l:next_idx = l:idx + a:direction
+
+  " Bounds check (no wrap-around — adjust if you want cycling)
+  if l:next_idx < 0 || l:next_idx >= len(l:files)
+    echo 'No ' . (a:direction > 0 ? 'next' : 'previous') . ' file'
+    return
+  endif
+
+  execute 'edit ' . fnameescape(l:files[l:next_idx])
+endfunction
+
+
+" command! -nargs=2 Switch call s:Switch(<f-args>)
+" function! s:Switch(switch_character, buffer_number)
+"     execute "nnoremap ;".a:switch_character." :b ".a:buffer_number."\r"
+" endfunction
+
+command! -nargs=1 Fstl call s:Fstl(<q-args>)
+function! s:Fstl(className)
+    execute "normal! i" . "class " .a:className. " extends StatelessWidget { const " .a:className. "({super.key}); @override Widget build(BuildContext context) { return ; } }"
+endfunction
+
+
+command! -nargs=1 Fstf call s:Fstf(<q-args>)
+function! s:Fstf(CN)
+	execute "normal! i" . "class " .a:CN. " extends StatefulWidget { const " .a:CN. "({super.key}); @override State<" .a:CN. "> createState() => _" .a:CN. "State(); } class _" .a:CN. "State extends State<" .a:CN. "> { @override void initState() { super.initState(); } @override void didChangeDependencies() { super.didChangeDependencies(); } @override void dispose() { super.dispose(); } @override Widget build(BuildContext context) { } }"
+endfunction

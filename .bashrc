@@ -54,6 +54,7 @@ alias sbS='sb stop --no-backup'
 alias sbr='sb db reset'
 
 alias g='git'
+alias gd='g difftool -y'
 alias gA='g add .'
 # gp and gP can not be git native aliases as git aliases are case-insensitive
 alias gp='g pull'
