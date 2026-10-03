@@ -11,23 +11,52 @@ set notimeout
 filetype on
 let mapleader = ";"
 
+
+function! FlashCursorline()
+  set cursorline 
+  call timer_start(150, {-> execute('set nocursorline nocursorcolumn')})
+endfunction
+
+nnoremap <c-h> <c-w>h<cmd>call FlashCursorline()<cr>
+nnoremap <c-j> <c-w>j<cmd>call FlashCursorline()<cr>
+nnoremap <c-k> <c-w>k<cmd>call FlashCursorline()<cr>
+nnoremap <c-l> <c-w>l<cmd>call FlashCursorline()<cr>
+
+" Center screen when jumping
+nnoremap n nzzzv<cmd>call FlashCursorline()<cr>
+nnoremap N Nzzzv<cmd>call FlashCursorline()<cr>
+nnoremap <C-d> <C-d>zt<cmd>call FlashCursorline()<cr>
+nnoremap <C-u> <C-u>zt<cmd>call FlashCursorline()<cr>
+nnoremap <C-o> <C-o>zt<cmd>call FlashCursorline()<cr>
+nnoremap <C-i> <C-i>zt<cmd>call FlashCursorline()<cr>
+
+" Flash on buffer enter
+augroup flash_cursorline
+  au!
+  au BufEnter * call FlashCursorline()
+augroup END
+
 iabbrev <l <lea<left><right>der>
 
 map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-" nnoremap <leader>j :bnext<cr>
-" nnoremap <leader>k :bprev<cr>
 
 nnoremap <leader>ve :e $MYVIMRC<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>
-nnoremap <leader>vt :e ~/vimtips<cr>
+nnoremap <leader>t :e ~/tips<cr>
 
 nnoremap <leader>be :e ~/.bashrc<cr>
 nnoremap <leader>bs :!source ~/.bashrc<cr>
 
-nnoremap Y y$
 nnoremap u <nop>
 nnoremap U u
+
+nnoremap Y y$
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+
+nnoremap <leader>d "+d
+vnoremap <leader>d "+d
 
 nnoremap `` :helpc<cr>:ccl<cr> 
 nnoremap <leader>ff :vim //j **/*.dart<cr>:copen<cr>
@@ -36,11 +65,12 @@ nnoremap <leader>w :wa<cr>
 nnoremap <leader>e :e<cr>
 nnoremap <leader>q :bd<cr>
 
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
+" nnoremap <c-h> <c-w>h
+" nnoremap <c-j> <c-w>j
+" nnoremap <c-k> <c-w>k
+" nnoremap <c-l> <c-w>l
 
+"add corresponding normal mode remaps that surround the word under the cursor
 vnoremap <leader>b <esc>`>a)<esc>`<i(<esc>
 vnoremap <leader>( <esc>`>a)<esc>`<i(<esc>
 vnoremap <leader>{ <esc>`>a}<esc>`<i{<esc>
@@ -71,6 +101,13 @@ nnoremap <leader>edp :e apps/lr_client/lib/features/home/
 nnoremap <leader>esm :e apps/lr_client/lib/features/neo_settings/
 
 
+inoreabbrev bw between
+
+augroup filetype_c
+au!
+au FileType c :iabbrev <buffer> #io #include<stdio.h>
+augroup END
+
 augroup filetype_vim
 au!
 au FileType vim :iabbrev <buffer> ba <><left>
@@ -80,105 +117,166 @@ augroup END
 
 augroup filetype_sql
 au!
+au FileType sql nnoremap <leader>s :r! cat ~/dev/sql_snippets/
 au FileType sql vnoremap <leader>r :w !psql $DATABASE_URL > sql.out <cr>
 
 au FileType sql nnoremap <leader>c mq0i-- <esc>`q
 au FileType sql vnoremap <leader>c :normal 0i-- <cr>
 
-au FileType sql :iabbrev <buffer> is IS
-au FileType sql :iabbrev <buffer> in IN
-au FileType sql :iabbrev <buffer> or OR
-au FileType sql :iabbrev <buffer> and AND
-au FileType sql :iabbrev <buffer> add ADD
-au FileType sql :iabbrev <buffer> not NOT
-au FileType sql :iabbrev <buffer> set SET
-au FileType sql :iabbrev <buffer> key KEY
+au FileType sql :iabbrev <buffer> ja ->>
+au FileType sql :iabbrev <buffer> is is
+au FileType sql :iabbrev <buffer> as as
+au FileType sql :iabbrev <buffer> in in
+au FileType sql :iabbrev <buffer> or or
+au FileType sql :iabbrev <buffer> on on
+au FileType sql :iabbrev <buffer> and and
+au FileType sql :iabbrev <buffer> add add
+au FileType sql :iabbrev <buffer> not not
+au FileType sql :iabbrev <buffer> set set
+au FileType sql :iabbrev <buffer> key key
+au FileType sql :iabbrev <buffer> for for
+au FileType sql :iabbrev <buffer> new new
+au FileType sql :iabbrev <buffer> old old
+au FileType sql :iabbrev <buffer> end end
 
-au FileType sql :iabbrev <buffer> primary PRIMARY
-au FileType sql :iabbrev <buffer> pri PRIMARY
+au FileType sql :iabbrev <buffer> foreign foreign
 
-au FileType sql :iabbrev <buffer> column COLUMN
-au FileType sql :iabbrev <buffer> col COLUMN
+au FileType sql :iabbrev <buffer> domain domain
+au FileType sql :iabbrev <buffer> dom domain
 
-au FileType sql :iabbrev <buffer> select SELECT
-au FileType sql :iabbrev <buffer> sel SELECT
+au FileType sql :iabbrev <buffer> stored stored
+au FileType sql :iabbrev <buffer> sto stored
 
-au FileType sql :iabbrev <buffer> from FROM
-au FileType sql :iabbrev <buffer> fro FROM
+au FileType sql :iabbrev <buffer> always always
+au FileType sql :iabbrev <buffer> alw always
 
-au FileType sql :iabbrev <buffer> where WHERE
-au FileType sql :iabbrev <buffer> whe WHERE
+au FileType sql :iabbrev <buffer> generated generated
+au FileType sql :iabbrev <buffer> gen generated
 
-au FileType sql :iabbrev <buffer> exists EXISTS
-au FileType sql :iabbrev <buffer> exi EXISTS
+au FileType sql :iabbrev <buffer> before before
+au FileType sql :iabbrev <buffer> bef before
 
-au FileType sql :iabbrev <buffer> update UPDATE
-au FileType sql :iabbrev <buffer> upd UPDATE
+au FileType sql :iabbrev <buffer> after after
+au FileType sql :iabbrev <buffer> aft after
 
-au FileType sql :iabbrev <buffer> alter ALTER
-au FileType sql :iabbrev <buffer> alt ALTER
+au FileType sql :iabbrev <buffer> then then
+au FileType sql :iabbrev <buffer> the then
 
-au FileType sql :iabbrev <buffer> table TABLE
-au FileType sql :iabbrev <buffer> tab TABLE
+au FileType sql :iabbrev <buffer> when when
+au FileType sql :iabbrev <buffer> whe when
 
-au FileType sql :iabbrev <buffer> create CREATE
-au FileType sql :iabbrev <buffer> cre CREATE
+au FileType sql :iabbrev <buffer> case case
+au FileType sql :iabbrev <buffer> cas case
 
-au FileType sql :iabbrev <buffer> insert INSERT
-au FileType sql :iabbrev <buffer> ins INSERT
+au FileType sql :iabbrev <buffer> trigger trigger
+au FileType sql :iabbrev <buffer> tri trigger
 
-au FileType sql :iabbrev <buffer> into INTO
-au FileType sql :iabbrev <buffer> int INTO
+au FileType sql :iabbrev <buffer> with with
+au FileType sql :iabbrev <buffer> wit with
 
-au FileType sql :iabbrev <buffer> enable ENABLE
-au FileType sql :iabbrev <buffer> ena ENABLE
+au FileType sql :iabbrev <buffer> join join
+au FileType sql :iabbrev <buffer> joi join
 
-au FileType sql :iabbrev <buffer> drop DROP
-au FileType sql :iabbrev <buffer> dro DROP
+au FileType sql :iabbrev <buffer> returns returns
+au FileType sql :iabbrev <buffer> ret returns
 
-au FileType sql :iabbrev <buffer> cascade CASCADE
-au FileType sql :iabbrev <buffer> cas CASCADE
+au FileType sql :iabbrev <buffer> language language
+au FileType sql :iabbrev <buffer> lan language
 
-au FileType sql :iabbrev <buffer> unique UNIQUE
-au FileType sql :iabbrev <buffer> uni UNIQUE
+au FileType sql :iabbrev <buffer> uuid uuid
+au FileType sql :iabbrev <buffer> uui uuid
 
-au FileType sql :iabbrev <buffer> null NULL
-au FileType sql :iabbrev <buffer> nul NULL
+au FileType sql :iabbrev <buffer> jsonb jsonb
+au FileType sql :iabbrev <buffer> jso jsonb
 
-au FileType sql :iabbrev <buffer> references REFERENCES
-au FileType sql :iabbrev <buffer> ref REFERENCES
+au FileType sql :iabbrev <buffer> primary primary
+au FileType sql :iabbrev <buffer> pri primary
 
-au FileType sql :iabbrev <buffer> default DEFAULT
-au FileType sql :iabbrev <buffer> def DEFAULT
+au FileType sql :iabbrev <buffer> column column
+au FileType sql :iabbrev <buffer> col column
 
-au FileType sql :iabbrev <buffer> true TRUE
-au FileType sql :iabbrev <buffer> tru TRUE
+au FileType sql :iabbrev <buffer> select select
+au FileType sql :iabbrev <buffer> sel select
 
-au FileType sql :iabbrev <buffer> false FALSE
-au FileType sql :iabbrev <buffer> fal FALSE
+au FileType sql :iabbrev <buffer> from from
+au FileType sql :iabbrev <buffer> fro from
 
-au FileType sql :iabbrev <buffer> bool BOOL
-au FileType sql :iabbrev <buffer> boo BOOL
+au FileType sql :iabbrev <buffer> where where
+au FileType sql :iabbrev <buffer> whe where
 
-au FileType sql :iabbrev <buffer> between BETWEEN
-au FileType sql :iabbrev <buffer> bet BETWEEN
+au FileType sql :iabbrev <buffer> exists exists
+au FileType sql :iabbrev <buffer> exi exists
 
-au FileType sql :iabbrev <buffer> function FUNCTION
-au FileType sql :iabbrev <buffer> fun FUNCTION
+au FileType sql :iabbrev <buffer> update update
+au FileType sql :iabbrev <buffer> upd update
 
-au FileType sql :iabbrev <buffer> replace REPLACE
-au FileType sql :iabbrev <buffer> rep REPLACE
+au FileType sql :iabbrev <buffer> alter alter
+au FileType sql :iabbrev <buffer> alt alter
 
-au FileType sql :iabbrev <buffer> index INDEX
-au FileType sql :iabbrev <buffer> ind INDEX
+au FileType sql :iabbrev <buffer> table table
+au FileType sql :iabbrev <buffer> tab table
 
-au FileType sql :iabbrev <buffer> check CHECK
-au FileType sql :iabbrev <buffer> che CHECK
+au FileType sql :iabbrev <buffer> type type
+au FileType sql :iabbrev <buffer> typ type
 
-au FileType sql :iabbrev <buffer> constraint CONSTRAINT
-au FileType sql :iabbrev <buffer> con CONSTRAINT
+au FileType sql :iabbrev <buffer> create create
+au FileType sql :iabbrev <buffer> cre create
 
-au FileType sql :iabbrev <buffer> rls ROW LEVEL SECURITY
+au FileType sql :iabbrev <buffer> insert insert
+au FileType sql :iabbrev <buffer> ins insert
+
+au FileType sql :iabbrev <buffer> into into
+au FileType sql :iabbrev <buffer> int into
+
+au FileType sql :iabbrev <buffer> enable enable
+au FileType sql :iabbrev <buffer> ena enable
+
+au FileType sql :iabbrev <buffer> drop drop
+au FileType sql :iabbrev <buffer> dro drop
+
+au FileType sql :iabbrev <buffer> cascade cascade
+au FileType sql :iabbrev <buffer> cas cascade
+
+au FileType sql :iabbrev <buffer> unique unique
+au FileType sql :iabbrev <buffer> uni unique
+
+au FileType sql :iabbrev <buffer> null null
+au FileType sql :iabbrev <buffer> nul null
+
+au FileType sql :iabbrev <buffer> references references
+au FileType sql :iabbrev <buffer> ref references
+
+au FileType sql :iabbrev <buffer> default default
+au FileType sql :iabbrev <buffer> def default
+
+au FileType sql :iabbrev <buffer> true true
+au FileType sql :iabbrev <buffer> tru true
+
+au FileType sql :iabbrev <buffer> false false
+au FileType sql :iabbrev <buffer> fal false
+
+au FileType sql :iabbrev <buffer> bool bool
+au FileType sql :iabbrev <buffer> boo bool
+
+au FileType sql :iabbrev <buffer> between between
+au FileType sql :iabbrev <buffer> bet between
+
+au FileType sql :iabbrev <buffer> function function
+au FileType sql :iabbrev <buffer> fun function
+
+au FileType sql :iabbrev <buffer> replace replace
+au FileType sql :iabbrev <buffer> rep replace
+
+au FileType sql :iabbrev <buffer> index index
+au FileType sql :iabbrev <buffer> ind index
+
+au FileType sql :iabbrev <buffer> check check
+au FileType sql :iabbrev <buffer> che check
+
+au FileType sql :iabbrev <buffer> constraint constraint
+au FileType sql :iabbrev <buffer> con constraint
+
+au FileType sql :iabbrev <buffer> rls row level security
 augroup END
 
 
@@ -199,6 +297,7 @@ au FileType dart vnoremap <leader>c :normal 0i// <cr>
 au FileType dart nnoremap <leader>bi /Widget build(BuildContext context) {<cr>
 
 au FileType dart :iabbrev <buffer> br ()<left>
+au FileType dart :iabbrev <buffer> bre (e)
 au FileType dart :iabbrev <buffer> bc {}<left>
 au FileType dart :iabbrev <buffer> bs []<left>
 au FileType dart :iabbrev <buffer> ba <><left>
@@ -206,6 +305,9 @@ au FileType dart :iabbrev <buffer> brc ({})<left><left>
 au FileType dart :iabbrev <buffer> brbc (){}<left>
 au FileType dart :iabbrev <buffer> brabc ()async{}<left>
 au FileType dart :iabbrev <buffer> fa =>
+au FileType dart :iabbrev <buffer> brfa ()=>
+au FileType dart :iabbrev <buffer> brefa (e)=>
+au FileType dart :iabbrev <buffer> brec (e){}<left>
 
 
 au FileType dart :iabbrev <buffer> ifb import 'package:flutter_bloc/flutter_bloc.dart';
@@ -219,6 +321,11 @@ au FileType dart :iabbrev <buffer> igm import 'package:google_maps_flutter/googl
 au FileType dart :iabbrev <buffer> ima import 'package:flutter/material.dart';
 au FileType dart :iabbrev <buffer> ivo import 'package:lr_client/core/models/common/value_object/value_object.dart';
 au FileType dart :iabbrev <buffer> itb import 'package:lr_client/core/table_builder/view/table_builder/table_builder.dart';
+au FileType dart :iabbrev <buffer> ipi import 'package:pointer_interceptor/pointer_interceptor.dart';
+au FileType dart :iabbrev <buffer> iff import 'package:flutter/foundation.dart';
+au FileType dart :iabbrev <buffer> ifs import 'package:flutter/services.dart';
+au FileType dart :iabbrev <buffer> iex import 'package:lr_client/core/util/extensions/extensions.dart';
+au FileType dart :iabbrev <buffer> iin import 'package:intl/intl.dart';
 
 au FileType dart :iabbrev <buffer> ret return
 au FileType dart :iabbrev <buffer> req required
@@ -251,15 +358,17 @@ augroup END
 
 
 " netrw
-nnoremap - :Lexplore %:p:h<CR>
+nnoremap - :Explore %:p:h<CR>
+let g:netrw_browse_split = 0
+let g:netrw_fastbrowse = 0
 " let g:loaded_netrw       = 1
 " let g:loaded_netrwPlugin = 1
 " let g:netrw_banner = 0
 " let g:netrw_liststyle = 3
-let g:netrw_winsize = 20
+" let g:netrw_winsize = 20
 " let g:netrw_keepdir = 1
-nnoremap <leader>dd :Lexplore %:p:h<CR>
-nnoremap <Leader>da :Lexplore<CR>
+" nnoremap <leader>dd :Lexplore %:p:h<CR>
+" nnoremap <Leader>da :Lexplore<CR>
 
 " file handling
 set autoread
@@ -287,13 +396,13 @@ set wildmenu
 set wildmode=list:longest,full
 
 
-" Center screen when jumping
-nnoremap n nzzzv
-nnoremap N Nzzzv
-nnoremap <C-d> <C-d>zt
-nnoremap <C-u> <C-u>zt
-nnoremap <C-o> <C-o>zt
-nnoremap <C-i> <C-i>zt
+" " Center screen when jumping
+" nnoremap n nzzzv
+" nnoremap N Nzzzv
+" nnoremap <C-d> <C-d>zt
+" nnoremap <C-u> <C-u>zt
+" nnoremap <C-o> <C-o>zt
+" nnoremap <C-i> <C-i>zt
 
 
 " :DartFmt — format current file with dart format
@@ -423,3 +532,16 @@ command! -nargs=1 Fstf call s:Fstf(<q-args>)
 function! s:Fstf(CN)
 	execute "normal! i" . "class " .a:CN. " extends StatefulWidget { const " .a:CN. "({super.key}); @override State<" .a:CN. "> createState() => _" .a:CN. "State(); } class _" .a:CN. "State extends State<" .a:CN. "> { @override void initState() { super.initState(); } @override void didChangeDependencies() { super.didChangeDependencies(); } @override void dispose() { super.dispose(); } @override Widget build(BuildContext context) { } }"
 endfunction
+
+
+" pascalCase to snake_case
+function! PascalToSnake()
+  let word = expand('<cword>')
+  let converted = substitute(word, '\C\([A-Z]\)', '_\l\1', 'g')
+  execute 'normal! ciw' . converted
+endfunction
+
+nnoremap crs :call PascalToSnake()<CR>
+
+
+
