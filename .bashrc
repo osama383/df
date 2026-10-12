@@ -7,6 +7,7 @@
 
 my_branch='settings-v2'
 # alias cc='clang'
+alias sbup='brew upgrade supabase'
 alias og='v ~/small_talk/g.md'
 alias library_card='echo -n "4090008710672" | xclip -selection clipboard'
 alias wifi_boost='sudo iw wlan0 set power_save off'

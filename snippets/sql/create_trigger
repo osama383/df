@@ -1,0 +1,21 @@
+CREATE FUNCTION function_name(
+	param_list
+)
+RETURNS TRIGGER
+LANGUAGE PLPGSQL
+AS
+$$
+DECLARE
+	-- variable declaration
+BEGIN
+	-- logic
+	RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trigger_name
+	{BEFORE | AFTER} { event }
+	ON table_name
+	[FOR [EACH] { ROW | STATEMENT }]
+	WHEN (OLD.status <> 'completed' AND NEW.status = 'completed')
+	EXECUTE PROCEDURE trigger_function
