@@ -1,8 +1,11 @@
+let mapleader = ";"
+
 so ~/dev/df/vim/vim.vim
 so ~/dev/df/vim/file_jk.vim
 so ~/dev/df/vim/c.vim
 so ~/dev/df/vim/sql.vim
 so ~/dev/df/vim/go_dart.vim
+so ~/dev/df/vim/flash_line.vim
 
 inoremap << <><left>
 inoremap (( ()<left>
@@ -20,7 +23,6 @@ set laststatus=2
 set statusline=%n\ %t\ %m
 set notimeout
 filetype on
-let mapleader = ";"
 
 
 map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -174,6 +176,3 @@ function! PascalToSnake()
 endfunction
 
 nnoremap crs :call PascalToSnake()<CR>
-
-
-ec "Vim Loaded. Proceed!"

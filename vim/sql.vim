@@ -1,6 +1,6 @@
 augroup filetype_sql
 au!
-au FileType sql nnoremap <leader>s :r! cat ~/dev/sql_snippets/
+au FileType sql nnoremap <leader>s :r! cat ~/dev/df/snippets/sql/
 au FileType sql vnoremap <leader>r :w !psql $DATABASE_URL > sql.out <cr>
 
 au FileType sql nnoremap <leader>c mq0i-- <esc>`q
