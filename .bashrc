@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+alias rebuild_suckless='rm config.h && make clean && make && sudo make install'
+
 my_branch='settings-v2'
 # alias cc='clang'
 alias sbup='brew upgrade supabase'

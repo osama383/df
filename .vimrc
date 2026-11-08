@@ -4,13 +4,14 @@ so ~/dev/df/vim/vim.vim
 so ~/dev/df/vim/file_jk.vim
 so ~/dev/df/vim/c.vim
 so ~/dev/df/vim/sql.vim
+so ~/dev/df/vim/markdown.vim
 so ~/dev/df/vim/go_dart.vim
 so ~/dev/df/vim/flash_line.vim
 
-inoremap << <><left>
-inoremap (( ()<left>
-inoremap [[ []<left>
-inoremap {{ {<cr>}<esc>O
+inoremap < <><left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
 
 inoreabbrev bw between
 
@@ -73,12 +74,6 @@ nnoremap <leader>ff :vim //j **/*.dart<cr>:copen<cr>
 " nnoremap <C-o> <C-o>zt
 " nnoremap <C-i> <C-i>zt
 
-
-
-augroup pandoc_g
-  au!
-  au BufWritePost ~/small_talk/g.md silent !pandoc % -o %:r.html
-augroup END
 
 
 " netrw
