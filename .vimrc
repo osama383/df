@@ -1,5 +1,7 @@
 let mapleader = ";"
 
+nnoremap <leader>s :r! cat ~/dev/df/snippets/
+
 so ~/dev/df/vim/vim.vim
 so ~/dev/df/vim/file_jk.vim
 so ~/dev/df/vim/c.vim
