@@ -1,0 +1,39 @@
+//remove the disabled border if always enabled
+import 'package:flutter/services.dart';
+
+class _Input extends StatelessWidget {
+  const _Input();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<Bloc, State>(
+      builder: (context, state) {
+        return TextFormField(
+	  enabled: enabled,
+          initialValue: state.value?.toString(),
+          minLines: 1,
+          maxLines: 1,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: context.l10n.label,
+            suffixText: context.l10n.volumeUnitGallons,
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey.shade400),
+            ),
+          ),
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            LengthLimitingTextInputFormatter(
+              4,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+            ),
+          ],
+          onChanged: (input) {
+            context.read<Bloc>().add(Event.onInput(double.tryParse(input)));
+          },
+        );
+      },
+    );
+  }
+}
+

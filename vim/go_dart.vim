@@ -78,7 +78,7 @@ au FileType dart :iabbrev <buffer> iac import 'dart:async';
 au FileType dart :iabbrev <buffer> ieq import 'package:equatable/equatable.dart';
 au FileType dart :iabbrev <buffer> isl import 'package:lr_client/injection.dart';
 au FileType dart :iabbrev <buffer> igm import 'package:google_maps_flutter/google_maps_flutter.dart';
-au FileType dart :iabbrev <buffer> ima import 'package:flutter/material.dart';
+au FileType dart :iabbrev <buffer> ima import 'package:material_ui/material_ui.dart';
 au FileType dart :iabbrev <buffer> ivo import 'package:lr_client/core/models/common/value_object/value_object.dart';
 au FileType dart :iabbrev <buffer> itb import 'package:lr_client/core/table_builder/view/table_builder/table_builder.dart';
 au FileType dart :iabbrev <buffer> ipi import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -86,6 +86,8 @@ au FileType dart :iabbrev <buffer> iff import 'package:flutter/foundation.dart';
 au FileType dart :iabbrev <buffer> ifs import 'package:flutter/services.dart';
 au FileType dart :iabbrev <buffer> iex import 'package:lr_client/core/util/extensions/extensions.dart';
 au FileType dart :iabbrev <buffer> iin import 'package:intl/intl.dart';
+au FileType dart :iabbrev <buffer> il10 import 'package:lr_client/l10n/gen/app_localizations.dart'; import 'package:lr_client/l10n/l10n.dart';
+au FileType dart :iabbrev <buffer> iutc import 'package:lr_client/core/models/common/utc.dart';
 
 au FileType dart :iabbrev <buffer> ret return
 au FileType dart :iabbrev <buffer> req required

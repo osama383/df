@@ -1,0 +1,10 @@
+import 'package:lr_client/core/models/errors.dart';
+import 'package:lr_client/core/try_catch.dart';
+
+Future<Either<DbConstraintError?, Unit>> resetFillLevel() 
+  => catchDbConstraintError(() async {
+    // logic here
+
+    return unit;
+  });
+
